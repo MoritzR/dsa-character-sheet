@@ -10,6 +10,11 @@ import Random
 type Message = Roll SkillCheck
               | Rolled SkillCheck DiceRoll
 
+type alias Model = {
+  roll: Roll,
+  character: Character
+  }
+
 type alias Character = {
   baseStats: BaseStats,
   skills: Skills
@@ -31,12 +36,9 @@ type alias Skills = {
   sing: Int
   }
 
-type alias Model = {
-  roll: Maybe {
-    dice: DiceRoll,
-    skillCheck: SkillCheck
-    },
-  character: Character
+type alias Roll = Maybe {
+  dice: DiceRoll,
+  skillCheck: SkillCheck
   }
 
 main =
@@ -88,16 +90,7 @@ view model = div []
       [ skill "Climb" model.character.skills.climb (DiceRoll base.mu base.ge base.kk)
       , skill "Sing" model.character.skills.sing (DiceRoll base.kl base.ch base.ko)
       ]
-  , div [] [ 
-    case model.roll of
-      Just roll -> 
-        text (showRiceRoll roll.dice
-        ++ " against " ++ showRiceRoll roll.skillCheck.against
-        ++ " with bonus " ++ String.fromInt roll.skillCheck.bonus
-        ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.skillCheck roll.dice)
-        )
-      Nothing -> text "Press the button to roll"
-    ]
+  , displayRoll model.roll
   ]
 
 baseStats : BaseStats -> Html Message
@@ -111,10 +104,22 @@ baseStats stats = div [class "base-stats"] [
     )]
 
 skill : String -> Int -> DiceRoll -> Html Message
-skill name bonus against= div [] [
+skill name bonus against = div [] [
       text (name ++ ": " ++ String.fromInt bonus)
       , button [onClick (Roll { bonus = bonus, against = against})] [text "Roll"]
       ]
+
+displayRoll : Roll -> Html Message
+displayRoll r = div [] [ 
+    case r of
+      Just roll -> 
+        text (showRiceRoll roll.dice
+        ++ " against " ++ showRiceRoll roll.skillCheck.against
+        ++ " with bonus " ++ String.fromInt roll.skillCheck.bonus
+        ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.skillCheck roll.dice)
+        )
+      Nothing -> text "Press the button to roll"
+    ]
 
 showRiceRoll : DiceRoll -> String
 showRiceRoll roll = String.fromInt roll.first
