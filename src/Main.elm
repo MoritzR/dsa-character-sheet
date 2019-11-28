@@ -7,6 +7,7 @@ import Html.Attributes exposing (class)
 import SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult)
 import Random
 import Model exposing (Model, Message, BaseStats, Roll)
+import Views.BaseStats as BaseStats
 
 main =
   Browser.element 
@@ -32,7 +33,7 @@ update msg model = case msg of
 
 view : Model -> Html Message
 view model = div []
-  [ baseStats model.character.baseStats
+  [ BaseStats.view model.character.baseStats
   , let base    = model.character.baseStats
         skills  = model.character.skills
     in 
@@ -42,25 +43,7 @@ view model = div []
       ]
   , displayRoll model.roll
   ]
-
-baseStats : BaseStats -> Html Message
-baseStats stats = div [class "base-stats"]
-    [ baseStat ("MU", stats.mu)
-    , baseStat ("KL", stats.kl)
-    , baseStat ("IN", stats.int)
-    , baseStat ("CH", stats.ch)
-    , baseStat ("FF", stats.ff)
-    , baseStat ("GE", stats.ge)
-    , baseStat ("KO", stats.ko)
-    , baseStat ("KK", stats.kk)
-    ]
-
-baseStat : (String, Int) -> Html Message
-baseStat (name, value) = div []
-  [ div [] [text name]
-  , div [] [text (String.fromInt value)]
-  ]
-  
+ 
 skill : String -> Int -> DiceRoll -> Html Message
 skill name bonus against = div [] [
       text (name ++ ": " ++ String.fromInt bonus)
