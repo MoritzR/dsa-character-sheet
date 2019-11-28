@@ -11,20 +11,24 @@ type Message = Roll SkillCheck
               | Rolled SkillCheck DiceRoll
 
 type alias Character = {
-  baseStats: {
-    mu: Int,
-    kl: Int,
-    int: Int,
-    ch: Int,
-    ff: Int,
-    ge: Int,
-    ko: Int,
-    kk: Int
-    },
-  skills: {
-    climb: Int,
-    sing: Int
-    }
+  baseStats: BaseStats,
+  skills: Skills
+  }
+
+type alias BaseStats = {
+  mu: Int,
+  kl: Int,
+  int: Int,
+  ch: Int,
+  ff: Int,
+  ge: Int,
+  ko: Int,
+  kk: Int
+  }
+
+type alias Skills = {
+  climb: Int,
+  sing: Int
   }
 
 type alias Model = {
