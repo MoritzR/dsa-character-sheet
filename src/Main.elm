@@ -84,11 +84,12 @@ update msg model = case msg of
 view : Model -> Html Message
 view model = div []
   [ baseStats model.character.baseStats
-  , let base = model.character.baseStats
+  , let base    = model.character.baseStats
+        skills  = model.character.skills
     in 
       div [class "skills"] 
-      [ skill "Climb" model.character.skills.climb (DiceRoll base.mu base.ge base.kk)
-      , skill "Sing" model.character.skills.sing (DiceRoll base.kl base.ch base.ko)
+      [ skill "Climb" skills.climb (DiceRoll base.mu base.ge base.kk)
+      , skill "Sing" skills.sing (DiceRoll base.kl base.ch base.ko)
       ]
   , displayRoll model.roll
   ]
