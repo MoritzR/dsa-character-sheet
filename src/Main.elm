@@ -9,19 +9,22 @@ import Views.BaseStats as BaseStats
 import Views.Roll as Roll
 import Views.Skills as Skills
 
+main : Program () Model Message
 main =
   Browser.element 
-    { init = init
+    { init = \_ -> (Model.initialModel, Cmd.none)
     , update = update
-    , subscriptions = subscriptions
+    , subscriptions = \_ -> Sub.none
     , view = view 
     }
 
-init : () -> (Model, Cmd Message)
-init _ = (Model.initialModel, Cmd.none)
+view : Model -> Html Message
+view model = div []
+  [ BaseStats.view model.character.baseStats
+  , Skills.view model.character
+  , Roll.view model.roll
+  ]
 
-subscriptions : Model -> Sub Message
-subscriptions model = Sub.none
 
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = case msg of
@@ -30,12 +33,5 @@ update msg model = case msg of
     , Random.generate (Model.Rolled skillCheck) (Random.map3 DiceRoll randomDiceRoll randomDiceRoll randomDiceRoll)
     )
   Model.Rolled skillCheck roll -> ({model | roll = Just {dice = roll, skillCheck = skillCheck} }, Cmd.none)
-
-view : Model -> Html Message
-view model = div []
-  [ BaseStats.view model.character.baseStats
-  , Skills.view model.character
-  , Roll.view model.roll
-  ]
 
 randomDiceRoll = Random.int 1 20
