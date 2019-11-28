@@ -81,14 +81,7 @@ update msg model = case msg of
 
 view : Model -> Html Message
 view model = div []
-  [ div [class "base-stats"] [
-    text ("MU, GE, KK: " 
-    ++ String.fromInt model.character.baseStats.mu
-    ++ ", "
-    ++ String.fromInt model.character.baseStats.ge
-    ++ ", "
-    ++ String.fromInt model.character.baseStats.kk
-    )]
+  [ baseStats model.character.baseStats
   , div [class "skills"]
     [ div [] [
       text ("Climb: " ++ String.fromInt model.character.skills.climb)
@@ -112,6 +105,16 @@ view model = div []
       Nothing -> text "Press the button to roll"
     ]
   ]
+
+baseStats : BaseStats -> Html Message
+baseStats stats = div [class "base-stats"] [
+    text ("MU, GE, KK: " 
+    ++ String.fromInt stats.mu
+    ++ ", "
+    ++ String.fromInt stats.ge
+    ++ ", "
+    ++ String.fromInt stats.kk
+    )]
 
 showRiceRoll : DiceRoll -> String
 showRiceRoll roll = String.fromInt roll.first
