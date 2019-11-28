@@ -49,6 +49,7 @@ body {
 }
 .skills span {
   flex: 1;
+  min-width: 4em;
 }
 .skills > div {
   border: 1px solid gray;
@@ -56,4 +57,5 @@ body {
   margin-bottom: 3px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
