@@ -17,7 +17,8 @@ initialModel = {
       },
     skills= {
       climb = 8,
-      sing = 5
+      sing = 5,
+      stealth = 12
       }
     }
   }
@@ -48,7 +49,8 @@ type alias BaseStats = {
 
 type alias Skills = {
   climb: Int,
-  sing: Int
+  sing: Int,
+  stealth: Int
   }
 
 type alias Roll = Maybe {

@@ -15,6 +15,7 @@ view character =
         div [class "skills"] 
         [ skill "Climb" skills.climb (DiceRoll base.mu base.ge base.kk)
         , skill "Sing" skills.sing (DiceRoll base.kl base.ch base.ko)
+        , skill "Stealth" skills.stealth (DiceRoll base.mu base.int base.ge)
         ]
  
 skill : String -> Int -> DiceRoll -> Html Message
