@@ -1,14 +1,13 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, div, text, button)
-import Html.Events exposing (onClick)
-import Html.Attributes exposing (class)
-import SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult)
 import Random
+import Html exposing (Html, div)
+import SkillCheck exposing (DiceRoll)
 import Model exposing (Model, Message, BaseStats, Roll)
 import Views.BaseStats as BaseStats
 import Views.Roll as Roll
+import Views.Skills as Skills
 
 main =
   Browser.element 
@@ -35,20 +34,8 @@ update msg model = case msg of
 view : Model -> Html Message
 view model = div []
   [ BaseStats.view model.character.baseStats
-  , let base    = model.character.baseStats
-        skills  = model.character.skills
-    in 
-      div [class "skills"] 
-      [ skill "Climb" skills.climb (DiceRoll base.mu base.ge base.kk)
-      , skill "Sing" skills.sing (DiceRoll base.kl base.ch base.ko)
-      ]
+  , Skills.view model.character
   , Roll.view model.roll
   ]
- 
-skill : String -> Int -> DiceRoll -> Html Message
-skill name bonus against = div [] [
-      text (name ++ ": " ++ String.fromInt bonus)
-      , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
-      ]
 
 randomDiceRoll = Random.int 1 20
