@@ -8,6 +8,7 @@ import SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult)
 import Random
 import Model exposing (Model, Message, BaseStats, Roll)
 import Views.BaseStats as BaseStats
+import Views.Roll as Roll
 
 main =
   Browser.element 
@@ -41,7 +42,7 @@ view model = div []
       [ skill "Climb" skills.climb (DiceRoll base.mu base.ge base.kk)
       , skill "Sing" skills.sing (DiceRoll base.kl base.ch base.ko)
       ]
-  , displayRoll model.roll
+  , Roll.view model.roll
   ]
  
 skill : String -> Int -> DiceRoll -> Html Message
@@ -50,27 +51,4 @@ skill name bonus against = div [] [
       , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
       ]
 
-displayRoll : Roll -> Html Message
-displayRoll r = div [] [ 
-    case r of
-      Just roll -> 
-        text (showRiceRoll roll.dice
-        ++ " against " ++ showRiceRoll roll.skillCheck.against
-        ++ " with bonus " ++ String.fromInt roll.skillCheck.bonus
-        ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.skillCheck roll.dice)
-        )
-      Nothing -> text "Press the button to roll"
-    ]
-
-showRiceRoll : DiceRoll -> String
-showRiceRoll roll = String.fromInt roll.first
-  ++ ", " ++ String.fromInt roll.second
-  ++ ", " ++ String.fromInt roll.third
-
 randomDiceRoll = Random.int 1 20
-
-showSkillCheckResult : SkillCheckResult -> String
-showSkillCheckResult result =
-  case result of
-    SkillCheck.Success qualityLevel  -> "Success (Quality Level: " ++ String.fromInt qualityLevel ++ ")"
-    SkillCheck.Failure diff          -> "Failure (" ++ String.fromInt diff ++ ")"
