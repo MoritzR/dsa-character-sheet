@@ -2,7 +2,7 @@ module Views.Skills exposing (view)
 
 import Model exposing (Character, Message)
 import SkillCheck exposing (DiceRoll, SkillCheckResult)
-import Html exposing (Html, div, text, button)
+import Html exposing (Html, div, span, text, button)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class)
 
@@ -18,7 +18,9 @@ view character =
         ]
  
 skill : String -> Int -> DiceRoll -> Html Message
-skill name bonus against = div [] [
-      text (name ++ ": " ++ String.fromInt bonus)
-      , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
-      ]
+skill name bonus against = div []
+    [ span []
+        [ text (name ++ ": " ++ String.fromInt bonus)
+        ]
+    , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
+    ]
