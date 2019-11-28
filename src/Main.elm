@@ -94,15 +94,23 @@ view model = div []
   ]
 
 baseStats : BaseStats -> Html Message
-baseStats stats = div [class "base-stats"] [
-    text ("MU, GE, KK: " 
-    ++ String.fromInt stats.mu
-    ++ ", "
-    ++ String.fromInt stats.ge
-    ++ ", "
-    ++ String.fromInt stats.kk
-    )]
+baseStats stats = div [class "base-stats"]
+    [ baseStat ("MU", stats.mu)
+    , baseStat ("KL", stats.kl)
+    , baseStat ("IN", stats.int)
+    , baseStat ("CH", stats.ch)
+    , baseStat ("FF", stats.ff)
+    , baseStat ("GE", stats.ge)
+    , baseStat ("KO", stats.ko)
+    , baseStat ("KK", stats.kk)
+    ]
 
+baseStat : (String, Int) -> Html Message
+baseStat (name, value) = div []
+  [ div [] [text name]
+  , div [] [text (String.fromInt value)]
+  ]
+  
 skill : String -> Int -> DiceRoll -> Html Message
 skill name bonus against = div [] [
       text (name ++ ": " ++ String.fromInt bonus)
