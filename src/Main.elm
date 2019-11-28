@@ -6,40 +6,7 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (class)
 import SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult)
 import Random
-
-type Message = Roll SkillCheck
-              | Rolled SkillCheck DiceRoll
-
-type alias Model = {
-  roll: Roll,
-  character: Character
-  }
-
-type alias Character = {
-  baseStats: BaseStats,
-  skills: Skills
-  }
-
-type alias BaseStats = {
-  mu: Int,
-  kl: Int,
-  int: Int,
-  ch: Int,
-  ff: Int,
-  ge: Int,
-  ko: Int,
-  kk: Int
-  }
-
-type alias Skills = {
-  climb: Int,
-  sing: Int
-  }
-
-type alias Roll = Maybe {
-  dice: DiceRoll,
-  skillCheck: SkillCheck
-  }
+import Model exposing (Model, Message, BaseStats, Roll)
 
 main =
   Browser.element 
@@ -50,36 +17,18 @@ main =
     }
 
 init : () -> (Model, Cmd Message)
-init _ = ( {
-  roll = Nothing,
-  character = {
-    baseStats= {
-      mu = 8,
-      kl = 12,
-      int = 14,
-      ch = 13,
-      ff = 16,
-      ge = 15,
-      ko = 9,
-      kk = 11
-      },
-    skills= {
-      climb = 8,
-      sing = 5
-      }
-    }
-  }, Cmd.none)
+init _ = (Model.initialModel, Cmd.none)
 
 subscriptions : Model -> Sub Message
 subscriptions model = Sub.none
 
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = case msg of
-  Roll skillCheck ->
+  Model.Roll skillCheck ->
     ( model
-    , Random.generate (Rolled skillCheck) (Random.map3 DiceRoll randomDiceRoll randomDiceRoll randomDiceRoll)
+    , Random.generate (Model.Rolled skillCheck) (Random.map3 DiceRoll randomDiceRoll randomDiceRoll randomDiceRoll)
     )
-  Rolled skillCheck roll -> ({model | roll = Just {dice = roll, skillCheck = skillCheck} }, Cmd.none)
+  Model.Rolled skillCheck roll -> ({model | roll = Just {dice = roll, skillCheck = skillCheck} }, Cmd.none)
 
 view : Model -> Html Message
 view model = div []
@@ -115,7 +64,7 @@ baseStat (name, value) = div []
 skill : String -> Int -> DiceRoll -> Html Message
 skill name bonus against = div [] [
       text (name ++ ": " ++ String.fromInt bonus)
-      , button [onClick (Roll { bonus = bonus, against = against})] [text "Roll"]
+      , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
       ]
 
 displayRoll : Roll -> Html Message
