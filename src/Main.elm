@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser
 import Html exposing (Html, div, text, button)
 import Html.Events exposing (onClick)
+import Html.Attributes exposing (class)
 import SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult)
 import Random
 
@@ -76,7 +77,7 @@ update msg model = case msg of
 
 view : Model -> Html Message
 view model = div []
-  [ div [] [
+  [ div [class "base-stats"] [
     text ("MU, GE, KK: " 
     ++ String.fromInt model.character.baseStats.mu
     ++ ", "
@@ -84,15 +85,17 @@ view model = div []
     ++ ", "
     ++ String.fromInt model.character.baseStats.kk
     )]
-  , div [] [
-    text ("Climb: " ++ String.fromInt model.character.skills.climb)
-    , let base = model.character.baseStats
-      in button [onClick (Roll { bonus = model.character.skills.climb, against = (DiceRoll base.mu base.ge base.kk)})] [text "Roll"]
-    ]
-  , div [] [
-    text ("Sing: " ++ String.fromInt model.character.skills.sing)
-    , let base = model.character.baseStats
-      in button [onClick (Roll { bonus = model.character.skills.sing, against = (DiceRoll base.kl base.ch base.ko)})] [text "Roll"]
+  , div [class "skills"]
+    [ div [] [
+      text ("Climb: " ++ String.fromInt model.character.skills.climb)
+      , let base = model.character.baseStats
+        in button [onClick (Roll { bonus = model.character.skills.climb, against = (DiceRoll base.mu base.ge base.kk)})] [text "Roll"]
+      ]
+    , div [] [
+      text ("Sing: " ++ String.fromInt model.character.skills.sing)
+      , let base = model.character.baseStats
+        in button [onClick (Roll { bonus = model.character.skills.sing, against = (DiceRoll base.kl base.ch base.ko)})] [text "Roll"]
+      ]
     ]
   , div [] [ 
     case model.roll of

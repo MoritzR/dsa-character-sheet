@@ -9,18 +9,19 @@
   height: inherit;
 }
 
-body {
-  font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
-  margin: 0;
-  text-align: center;
-  color: #293c4b;
+.base-stats {
+  border: 2px solid black;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
-h1 {
-  font-size: 30px;
+.skills {
+  border: 2px solid black;
+  padding: 5px;
+  margin-bottom: 10px;
 }
-
-img {
-  margin: 20px 0;
-  max-width: 200px;
+.skills > div {
+  border: 1px solid gray;
+  padding: 3px;
+  margin-bottom: 3px;
 }
