@@ -13,9 +13,16 @@
   border: 2px solid black;
   padding: 5px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .base-stats > div {
+  flex: 1;
   border: 1px solid gray;
+  min-width: 2em;
+  max-width: 6em;
   padding: 3px;
   margin-bottom: 3px;
   margin-left: 3px;
