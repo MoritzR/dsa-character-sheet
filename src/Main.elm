@@ -82,18 +82,12 @@ update msg model = case msg of
 view : Model -> Html Message
 view model = div []
   [ baseStats model.character.baseStats
-  , div [class "skills"]
-    [ div [] [
-      text ("Climb: " ++ String.fromInt model.character.skills.climb)
-      , let base = model.character.baseStats
-        in button [onClick (Roll { bonus = model.character.skills.climb, against = (DiceRoll base.mu base.ge base.kk)})] [text "Roll"]
+  , let base = model.character.baseStats
+    in 
+      div [class "skills"] 
+      [ skill "Climb" model.character.skills.climb (DiceRoll base.mu base.ge base.kk)
+      , skill "Sing" model.character.skills.sing (DiceRoll base.kl base.ch base.ko)
       ]
-    , div [] [
-      text ("Sing: " ++ String.fromInt model.character.skills.sing)
-      , let base = model.character.baseStats
-        in button [onClick (Roll { bonus = model.character.skills.sing, against = (DiceRoll base.kl base.ch base.ko)})] [text "Roll"]
-      ]
-    ]
   , div [] [ 
     case model.roll of
       Just roll -> 
@@ -115,6 +109,12 @@ baseStats stats = div [class "base-stats"] [
     ++ ", "
     ++ String.fromInt stats.kk
     )]
+
+skill : String -> Int -> DiceRoll -> Html Message
+skill name bonus against= div [] [
+      text (name ++ ": " ++ String.fromInt bonus)
+      , button [onClick (Roll { bonus = bonus, against = against})] [text "Roll"]
+      ]
 
 showRiceRoll : DiceRoll -> String
 showRiceRoll roll = String.fromInt roll.first
