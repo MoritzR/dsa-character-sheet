@@ -30,5 +30,5 @@ skill name bonus against = div []
     [ span []
         [ text (name ++ ": " ++ String.fromInt bonus)
         ]
-    , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Roll"]
+    , button [onClick (Model.Roll { bonus = bonus, against = against})] [text "Würfeln"]
     ]

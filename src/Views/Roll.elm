@@ -10,11 +10,11 @@ view r = div [ id "roll" ] [
     case r of
       Just roll -> 
         text (showDiceRoll roll.dice
-        ++ " against " ++ showDiceRoll roll.skillCheck.against
-        ++ " with bonus " ++ String.fromInt roll.skillCheck.bonus
+        ++ " gegen " ++ showDiceRoll roll.skillCheck.against
+        ++ " mit Bonus " ++ String.fromInt roll.skillCheck.bonus
         ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.skillCheck roll.dice)
         )
-      Nothing -> text "Press the button to roll"
+      Nothing -> text "Warte auf Wurf..."
     ]
 
 showDiceRoll : DiceRoll -> String
@@ -25,5 +25,5 @@ showDiceRoll roll = String.fromInt roll.first
 showSkillCheckResult : SkillCheckResult -> String
 showSkillCheckResult result =
   case result of
-    SkillCheck.Success qualityLevel  -> "Success (Quality Level: " ++ String.fromInt qualityLevel ++ ")"
-    SkillCheck.Failure diff          -> "Failure (" ++ String.fromInt diff ++ ")"
+    SkillCheck.Success qualityLevel  -> "Erfolg (Qualitätsstufe: " ++ String.fromInt qualityLevel ++ ")"
+    SkillCheck.Failure diff          -> "Fehlschlag (" ++ String.fromInt diff ++ ")"
