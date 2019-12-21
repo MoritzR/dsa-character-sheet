@@ -1,7 +1,7 @@
 module Views.Skills exposing (view)
 
 import Model exposing (Character, Message)
-import SkillCheck exposing (DiceRoll, SkillCheckResult)
+import SkillCheck exposing (DiceRoll)
 import Html exposing (Html, div, span, text, button)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class)

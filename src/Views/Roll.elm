@@ -3,7 +3,6 @@ module Views.Roll exposing (view)
 import Model exposing (Message, Roll)
 import SkillCheck exposing ( DiceRoll, SkillCheckResult)
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (class)
 
 view : Roll -> Html Message
 view r = div [] [ 
