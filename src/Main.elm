@@ -4,7 +4,7 @@ import Browser
 import Random
 import Html exposing (Html, div)
 import SkillCheck exposing (DiceRoll)
-import Model exposing (Model, Message, BaseStats, Roll)
+import Model exposing (Model, Message)
 import Views.BaseStats as BaseStats
 import Views.Roll as Roll
 import Views.Skills as Skills
