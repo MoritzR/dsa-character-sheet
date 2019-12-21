@@ -13,9 +13,16 @@ view character =
         skills  = character.skills
     in 
         div [class "skills"] 
-        [ skill "Climb" skills.climb (DiceRoll base.mu base.ge base.kk)
-        , skill "Sing" skills.sing (DiceRoll base.kl base.ch base.ko)
-        , skill "Stealth" skills.stealth (DiceRoll base.mu base.int base.ge)
+        [ skill "Klettern" skills.climb (DiceRoll base.mu base.ge base.kk)
+        , skill "Körperbeherrschung" skills.bodyControl (DiceRoll base.ge base.ge base.ko)
+        , skill "Selbstbeherrschung" skills.composure (DiceRoll base.mu base.mu base.ko)
+        , skill "Sinnesschärfe" skills.acuity (DiceRoll base.kl base.int base.int)
+        , skill "Taschendiebstahl" skills.pickpocket (DiceRoll base.mu base.ff base.ge)
+        , skill "Verbergen" skills.hide (DiceRoll base.mu base.int base.ge)
+        , skill "Gassenwissen" skills.alleyLore (DiceRoll base.kl base.int base.ch)
+        , skill "Menschenkenntnis" skills.insight (DiceRoll base.kl base.int base.ch)
+        , skill "Überreden" skills.persuade (DiceRoll base.mu base.int base.ch)
+        , skill "Schlösserknacken" skills.lockpicking (DiceRoll base.int base.ff base.ff)
         ]
  
 skill : String -> Int -> DiceRoll -> Html Message
