@@ -34,4 +34,5 @@ update msg model = case msg of
     )
   Model.Rolled skillCheck roll -> ({model | roll = Just {dice = roll, skillCheck = skillCheck} }, Cmd.none)
 
+randomDiceRoll : Random.Generator Int
 randomDiceRoll = Random.int 1 20

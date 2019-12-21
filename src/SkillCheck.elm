@@ -1,4 +1,4 @@
-module SkillCheck exposing (..)
+module SkillCheck exposing (SkillCheck, DiceRoll, SkillCheckResult(..), QualityLevel, getSkillCheckResult)
 
 type alias SkillCheck = {
   against: DiceRoll,
