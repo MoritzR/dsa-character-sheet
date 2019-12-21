@@ -38,7 +38,9 @@ body {
   border: 2px solid black;
   padding: 5px;
   margin-bottom: 10px;
-  font-size: 30px;
+}
+.skills > div {
+  height: 2.5em;
 }
 .skills button {
   font-size: 18px;
@@ -50,6 +52,7 @@ body {
 .skills span {
   flex: 1;
   min-width: 4em;
+  overflow-wrap: break-word;
 }
 .skills > div {
   border: 1px solid gray;
