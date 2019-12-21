@@ -10,17 +10,17 @@ suite : Test
 suite =
     describe "doing a skill check"
         [ describe "without a bonus"
-            [ test "fails when all results are below the expectation" <|
+            [ test "fails when all results are above the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
-                        diceRoll    = DiceRoll 1 1 1
+                        diceRoll    = DiceRoll 3 3 3
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-3))
-            , test "fails when one result is below the expectation" <|
+            , test "fails when one result is above the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
-                        diceRoll    = DiceRoll 1 2 2
+                        diceRoll    = DiceRoll 3 2 2
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-1))
@@ -30,13 +30,13 @@ suite =
                         diceRoll    = DiceRoll 2 2 2
                     in  isSuccess (getSkillCheckResult skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
-            , test "succeeds when all results are above to the expectation" <|
+            , test "succeeds when all results are below to the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
-                        diceRoll    = DiceRoll 3 3 3
+                        diceRoll    = DiceRoll 1 1 1
                     in  isSuccess (getSkillCheckResult skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
-            , test "an above result does not cancel out a below result" <|
+            , test "a below result does not cancel out an above result" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 1 2 3
@@ -45,43 +45,43 @@ suite =
                             (Failure (-1))
             ]
         , describe "with a bonus of 5"
-            [ test "succeeds even when one result is below the expectation by 5" <|
+            [ test "succeeds even when one result is above the expectation by 5" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 5 10 10
+                        diceRoll    = DiceRoll 15 10 10
                     in  isSuccess (getSkillCheckResult skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
-            , test "succeeds when all are below the expected with a summed difference of 5" <|
+            , test "succeeds when all are above the expected with a summed difference of 5" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 8 8 9
+                        diceRoll    = DiceRoll 12 12 11
                     in  isSuccess (getSkillCheckResult skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
-            , test "fails when all are below the expected with a summed difference of 6" <|
+            , test "fails when all are above the expected with a summed difference of 6" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 7 8 9
+                        diceRoll    = DiceRoll 13 12 11
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-1))
-            , test "fails when one is below the expected with a difference of 6" <|
+            , test "fails when one is above the expected with a difference of 6" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 4 10 10
+                        diceRoll    = DiceRoll 16 10 10
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-1))
-            , test "fails when one is below the expected with a difference of 6, even when the other two are above the expectation" <|
+            , test "fails when one is above the expected with a difference of 6, even when the other two are below the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 4 20 20
+                        diceRoll    = DiceRoll 16 1 1
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-1))
             , test "shows by how much the dice roll missed on a failure" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
-                        diceRoll    = DiceRoll 2 9 20
+                        diceRoll    = DiceRoll 18 11 1
                     in  Expect.equal 
                             (getSkillCheckResult skillCheck diceRoll) 
                             (Failure (-4))
@@ -93,7 +93,7 @@ suite =
                             ++ " remaining") <|
                         \_ ->
                             let skillCheck  = SkillCheck (DiceRoll 10 10 10) (5 + bonusRemaining) 
-                                diceRoll    = DiceRoll 5 10 10
+                                diceRoll    = DiceRoll 15 10 10
                             in  Expect.equal 
                                     (getSkillCheckResult skillCheck diceRoll) 
                                     (Success expectedQualityLevel)

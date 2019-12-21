@@ -20,9 +20,9 @@ getSkillCheckResult : SkillCheck -> DiceRoll -> SkillCheckResult
 getSkillCheckResult skillCheck actual =
   let expected  = skillCheck.against
       max0      = max 0
-      diff      = max0 (expected.first - actual.first)
-                + max0 (expected.second - actual.second)
-                + max0 (expected.third - actual.third)
+      diff      = max0 (actual.first - expected.first)
+                + max0 (actual.second - expected.second)
+                + max0 (actual.third - expected.third)
                 - skillCheck.bonus
   in  if diff <= 0
         then Success (min 6 (abs (diff + 1) // 3 + 1))
