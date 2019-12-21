@@ -59,3 +59,12 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+div#roll {
+  position: sticky;
+  bottom: 0px;
+
+  border-radius: 3px;
+  background-color: rgb(160, 168, 245);
+  padding: 8px;
+}

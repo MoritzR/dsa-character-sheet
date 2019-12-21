@@ -3,9 +3,10 @@ module Views.Roll exposing (view)
 import Model exposing (Message, Roll)
 import SkillCheck exposing ( DiceRoll, SkillCheckResult)
 import Html exposing (Html, div, text)
+import Html.Attributes exposing (id)
 
 view : Roll -> Html Message
-view r = div [] [ 
+view r = div [ id "roll" ] [ 
     case r of
       Just roll -> 
         text (showDiceRoll roll.dice
