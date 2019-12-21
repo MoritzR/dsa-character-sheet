@@ -26,7 +26,7 @@ getSkillCheckResult skillCheck actual =
                 - skillCheck.bonus
   in  if diff <= 0
         then Success (min 6 (abs (diff + 1) // 3 + 1))
-        else Failure (diff *(-1))
+        else Failure (diff * -1)
 
 sumOfDice : DiceRoll -> Int
 sumOfDice roll = roll.first + roll.second + roll.third
