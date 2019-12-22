@@ -13,6 +13,19 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.header > button {
+  border: 0;
+  padding: 3px;
+  margin-left: 15px;
+  background-color: lightblue;
+  border-radius: 2px;
+}
+
 .base-stats {
   border: 2px solid black;
   padding: 5px;
@@ -32,6 +45,9 @@ body {
   margin-left: 3px;
   display: inline-block;
   text-align: center;
+}
+.base-stats input {
+  width: 80%;
 }
 
 .skills {

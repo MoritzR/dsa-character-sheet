@@ -4,8 +4,10 @@ import SkillCheck exposing (SkillCheck, DiceRoll)
 
 initialModel : Model
 initialModel = {
+  editing = False,
   roll = Nothing,
   character = {
+    name = "<Dein Charaktername>",
     baseStats= {
       mu = 12,
       kl = 10,
@@ -70,13 +72,18 @@ initialModel = {
 
 type Message = Roll SkillCheck
               | Rolled SkillCheck DiceRoll
+              | Save Character
+              | Edit
+              | UpdateCharacter (Character -> Character)
 
 type alias Model = {
+  editing: Bool,
   roll: Roll,
   character: Character
   }
 
 type alias Character = {
+  name: String,
   baseStats: BaseStats,
   skills: Skills
   }
