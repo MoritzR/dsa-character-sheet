@@ -27,29 +27,14 @@ view model =
 
 updateMu : String -> Character -> Character
 updateMu = update .mu (\b v -> {b | mu = v})
-
-updateKl : String -> Character -> Character
 updateKl = update .kl (\b v -> {b | kl = v})
-
-updateIn : String -> Character -> Character
 updateIn = update .int (\b v -> {b | int = v})
-
-updateCh : String -> Character -> Character
 updateCh = update .ch (\b v -> {b | ch = v})
-
-updateFf : String -> Character -> Character
 updateFf = update .ff (\b v -> {b | ff = v})
-
-updateGe : String -> Character -> Character
 updateGe = update .ge (\b v -> {b | ge = v})
-
-updateKo : String -> Character -> Character
 updateKo = update .ko (\b v -> {b | ko = v})
-
-updateKk : String -> Character -> Character
 updateKk = update .kk (\b v -> {b | kk = v})
  
-
 update : (BaseStats -> Int) -> (BaseStats -> Int -> BaseStats) -> String -> Character -> Character
 update defaultGetter setter value character = 
   let baseStats = character.baseStats
