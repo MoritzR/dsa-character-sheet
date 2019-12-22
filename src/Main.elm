@@ -24,7 +24,7 @@ view : Model -> Html Message
 view model = div []
   [ Header.view model
   , BaseStats.view model
-  , Skills.view model.character
+  , Skills.view model
   , Roll.view model.roll
   ]
 
