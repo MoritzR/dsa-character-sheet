@@ -11,7 +11,7 @@ import Views.Skills as Skills
 import Views.Header as Header
 import LocalStorage
 
-main : Program (Maybe Character) Model Message
+main : Program Character Model Message
 main =
   Browser.element 
     { init = init
@@ -28,12 +28,15 @@ view model = div []
   , Roll.view model.roll
   ]
 
-init : Maybe Character -> (Model, Cmd Message)
-init maybeCharacter = 
-  let initialModel = Model.initialModel in
-  case maybeCharacter of
-    Just character  -> ({initialModel | character = character}, Cmd.none)
-    Nothing         -> (initialModel, Cmd.none)
+init : Character -> (Model, Cmd Message)
+init character = 
+  let initialModel = {
+        editing = False,
+        roll = Nothing,
+        character = character
+        }
+  in
+    ({initialModel | character = character}, Cmd.none)
 
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = case msg of
