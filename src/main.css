@@ -63,7 +63,7 @@ body {
   border: none;
   background-color: lightblue;
   border-radius: 2px;
-  flex: 3;
+  flex: 1;
 }
 .skills span {
   flex: 1;
