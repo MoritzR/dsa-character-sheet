@@ -14,33 +14,33 @@ suite =
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 3 3 3
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-3))
             , test "fails when one result is above the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 3 2 2
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-1))
             , test "succeeds when all results are equal to the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 2 2 2
-                    in  isSuccess (getSkillCheckResult skillCheck diceRoll)
+                    in  isSuccess (skillCheckNoEasement skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
             , test "succeeds when all results are below to the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 1 1 1
-                    in  isSuccess (getSkillCheckResult skillCheck diceRoll)
+                    in  isSuccess (skillCheckNoEasement skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
             , test "a below result does not cancel out an above result" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 2 2 2) 0 
                         diceRoll    = DiceRoll 1 2 3
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-1))
             ]
         , describe "with a bonus of 5"
@@ -48,42 +48,72 @@ suite =
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 15 10 10
-                    in  isSuccess (getSkillCheckResult skillCheck diceRoll)
+                    in  isSuccess (skillCheckNoEasement skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
             , test "succeeds when all are above the expected with a summed difference of 5" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 12 12 11
-                    in  isSuccess (getSkillCheckResult skillCheck diceRoll)
+                    in  isSuccess (skillCheckNoEasement skillCheck diceRoll)
                         |> Expect.true "Dice roll failed"
             , test "fails when all are above the expected with a summed difference of 6" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 13 12 11
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-1))
             , test "fails when one is above the expected with a difference of 6" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 16 10 10
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-1))
             , test "fails when one is above the expected with a difference of 6, even when the other two are below the expectation" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 16 1 1
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-1))
             , test "shows by how much the dice roll missed on a failure" <|
                 \_ -> 
                     let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
                         diceRoll    = DiceRoll 18 11 1
                     in  Expect.equal 
-                            (getSkillCheckResult skillCheck diceRoll) 
+                            (skillCheckNoEasement skillCheck diceRoll) 
                             (Failure (-4))
+            ]
+        , describe "with easement"
+            [ test "reduces the required skill checks each by the easement value" <|
+                \_ -> 
+                    let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
+                        diceRoll    = DiceRoll 15 10 10
+                    in  isSuccess (getSkillCheckResult 1 skillCheck diceRoll)
+                        |> Expect.true "Dice roll failed"
+            , test "still fails if the easement is not enough" <|
+                \_ -> 
+                    let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
+                        diceRoll    = DiceRoll 17 11 11
+                    in  Expect.equal
+                            (getSkillCheckResult 1 skillCheck diceRoll)
+                            (Failure (-1))
+            ]
+        , describe "with negative easement"
+            [ test "increases the required skill checks each by the easement value" <|
+                \_ -> 
+                    let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
+                        diceRoll    = DiceRoll 14 9 9
+                    in  isSuccess (getSkillCheckResult -1 skillCheck diceRoll)
+                        |> Expect.true "Dice roll failed"
+            , test "fails if the rolls are off by one" <|
+                \_ -> 
+                    let skillCheck  = SkillCheck (DiceRoll 10 10 10) 5 
+                        diceRoll    = DiceRoll 15 9 9
+                    in  Expect.equal
+                            (getSkillCheckResult -1 skillCheck diceRoll)
+                            (Failure (-1))
             ]
         , describe "succeding with a quality level"
             (let testQualityLevel (bonusRemaining, expectedQualityLevel)
@@ -94,7 +124,7 @@ suite =
                             let skillCheck  = SkillCheck (DiceRoll 10 10 10) (5 + bonusRemaining) 
                                 diceRoll    = DiceRoll 15 10 10
                             in  Expect.equal 
-                                    (getSkillCheckResult skillCheck diceRoll) 
+                                    (skillCheckNoEasement skillCheck diceRoll) 
                                     (Success expectedQualityLevel)
              in List.map testQualityLevel
                     [ (0, 1)
@@ -120,3 +150,6 @@ isSuccess result =
     case result of
         Success _ -> True
         Failure _ -> False
+
+skillCheckNoEasement : SkillCheck -> DiceRoll -> SkillCheckResult
+skillCheckNoEasement = getSkillCheckResult 0

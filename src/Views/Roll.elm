@@ -2,18 +2,27 @@ module Views.Roll exposing (view)
 
 import Model exposing (Message, Roll)
 import SkillCheck exposing ( DiceRoll, SkillCheckResult)
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, text, button, span)
 import Html.Attributes exposing (id)
+import Html.Events exposing (onClick)
 
 view : Roll -> Html Message
 view r = div [ id "roll" ] [ 
     case r of
       Just roll -> 
-        text (showDiceRoll roll.dice
-        ++ " gegen " ++ showDiceRoll roll.skillCheck.against
-        ++ " mit Bonus " ++ String.fromInt roll.skillCheck.bonus
-        ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.skillCheck roll.dice)
-        )
+        div []
+        [ text (showDiceRoll roll.dice
+          ++ " gegen " ++ showDiceRoll roll.skillCheck.against
+          ++ " mit Bonus " ++ String.fromInt roll.skillCheck.bonus
+          ++ " => " ++ showSkillCheckResult (SkillCheck.getSkillCheckResult roll.easement roll.skillCheck roll.dice)
+          )
+        , div []
+          [ text "Erleichtert um:"
+          , div [ id "easement" ] [text (String.fromInt roll.easement)]
+          , button [ onClick Model.DecreaseEasement ] [text "-"]
+          , button [ onClick Model.IncreaseEasement ] [text "+"]
+          ]
+        ]
       Nothing -> text "Warte auf Wurf..."
     ]
 

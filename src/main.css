@@ -87,3 +87,10 @@ div#roll {
   background-color: rgb(160, 168, 245);
   padding: 8px;
 }
+div#roll #easement {
+  display: inline-block;
+  font-weight: bold;
+  width: 1.5em;
+  margin-left: 5px;
+  margin-right: 3px;
+}

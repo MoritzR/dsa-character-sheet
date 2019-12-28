@@ -4,6 +4,8 @@ import SkillCheck exposing (SkillCheck, DiceRoll)
 
 type Message = Roll SkillCheck
               | Rolled SkillCheck DiceRoll
+              | IncreaseEasement
+              | DecreaseEasement
               | Save Character
               | Edit
               | UpdateCharacter (Character -> Character)
@@ -83,5 +85,6 @@ type alias Skills = {
 
 type alias Roll = Maybe {
   dice: DiceRoll,
-  skillCheck: SkillCheck
+  skillCheck: SkillCheck,
+  easement: Int
   }
