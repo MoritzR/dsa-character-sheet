@@ -4,6 +4,4 @@
 A webapp for rolling skill checks in the role playing game DSA (Das Schwarze Auge).
 ![](dsa-character-sheet.png)
 
-The webapp is hosted on [Github](https://moritzr.github.io/dsa-character-sheet).
-
-This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app). You can find a guide [here](https://github.com/halfzebra/create-elm-app/blob/master/template/README.md).
+You can see the webapp running [here](https://moritzr.github.io/dsa-character-sheet).
