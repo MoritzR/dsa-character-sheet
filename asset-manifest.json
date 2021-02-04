@@ -1,0 +1,15 @@
+{
+  "main.css": "/dsa-character-sheet/static/css/main.aab52bfd.chunk.css",
+  "main.js": "/dsa-character-sheet/static/js/main.b7d2cd85.chunk.js",
+  "main.js.map": "/dsa-character-sheet/static/js/main.b7d2cd85.chunk.js.map",
+  "runtime~main.js": "/dsa-character-sheet/static/js/runtime~main.090470ea.js",
+  "runtime~main.js.map": "/dsa-character-sheet/static/js/runtime~main.090470ea.js.map",
+  "vendors~main.js": "/dsa-character-sheet/static/js/vendors~main.0b49ec49.chunk.js",
+  "vendors~main.js.map": "/dsa-character-sheet/static/js/vendors~main.0b49ec49.chunk.js.map",
+  "./service-worker.js": "/dsa-character-sheet/./service-worker.js",
+  "favicon.ico": "/dsa-character-sheet/favicon.ico",
+  "index.html": "/dsa-character-sheet/index.html",
+  "logo.svg": "/dsa-character-sheet/logo.svg",
+  "manifest.json": "/dsa-character-sheet/manifest.json",
+  "precache-manifest.c9cd6ffdd6ce0d4d635ccf181b660c27.js": "/dsa-character-sheet/precache-manifest.c9cd6ffdd6ce0d4d635ccf181b660c27.js"
+}
