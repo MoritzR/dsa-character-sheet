@@ -5,3 +5,13 @@ A webapp for rolling skill checks in the role playing game DSA (Das Schwarze Aug
 ![](dsa-character-sheet.png)
 
 You can see the webapp running [here](https://moritzr.github.io/dsa-character-sheet).
+
+## Run it
+Run this using create-elm-app
+
+```
+npm install create-elm-app -g
+
+elm-app test
+elm-app start
+```
